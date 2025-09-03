@@ -1,0 +1,76 @@
+package repository.impl;
+
+import entity.Showtime;
+import repository.BaseRepository;
+import repository.IShowtimeRepository;
+
+import java.sql.*;
+
+
+public class ShowtimeRepository implements IShowtimeRepository {
+
+    @Override
+    public Showtime getShowtimeByMovieId(int movieId) {
+        String query = "SELECT * FROM showtimes WHERE movie_id = ?";
+        try (Connection connection = BaseRepository.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, movieId);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                Showtime showtime = new Showtime();
+                showtime.setShowtimeId(rs.getInt("showtime_id"));
+                showtime.setMovieId(rs.getInt("movie_id"));
+                showtime.setRoomId(rs.getInt("room_id"));
+                showtime.setStartTime(rs.getString("showtime_start_time"));
+                showtime.setPrice(rs.getDouble("showtime_price"));
+                showtime.setTotalSeats(rs.getInt("total_seats"));
+                return showtime;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    public Showtime getShowtimeById(int showtimeId) {
+        String query = "SELECT * FROM showtimes WHERE showtime_id = ?";
+        try (Connection connection = BaseRepository.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, showtimeId);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                Showtime showtime = new Showtime();
+                showtime.setShowtimeId(rs.getInt("showtime_id"));
+                showtime.setMovieId(rs.getInt("movie_id"));
+                showtime.setRoomId(rs.getInt("room_id"));
+                showtime.setStartTime(rs.getString("showtime_start_time"));
+                showtime.setPrice(rs.getDouble("showtime_price"));
+                showtime.setTotalSeats(rs.getInt("total_seats"));
+                return showtime;
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi lấy showtime theo showtimeId: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void updateSeats(int showtimeId, int newSeats) {
+        String query = "UPDATE showtimes SET total_seats = ? WHERE showtime_id = ?";
+        try (Connection connection = BaseRepository.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, newSeats);
+            preparedStatement.setInt(2, showtimeId);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
