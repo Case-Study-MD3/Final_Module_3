@@ -1,57 +1,59 @@
 package entity;
 
+import java.time.LocalDate;
+
 public class Movie {
-    private String image;
-    private String title;
-    private String type;
+    private String name;
+    private String genre;
     private int duration;
-    private String releaseDate;
+    private LocalDate movieDate;
+    private String images;
 
-    public Movie(String image, String title, String type, int duration, String releaseDate) {
-        this.image = image;
-        this.title = title;
-        this.type = type;
+    public Movie(String name, String genre, int duration, LocalDate movieDate, String images) {
+        this.name = name;
+        this.genre = genre;
         this.duration = duration;
-        this.releaseDate = releaseDate;
+        this.movieDate = movieDate;
+        this.images = images;
     }
 
-    public String getImage() {
-        return image;
+    public String getName() {
+        return name;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getGenre() {
+        return genre;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getType() {
-        return type;
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public int getDuration() {
         return duration;
     }
 
-    public String getReleaseDate() {
-        return releaseDate;
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public LocalDate getMovieDate() {
+        return movieDate;
+    }
+
+    public void setMovieDate(LocalDate movieDate) {
+        this.movieDate = movieDate;
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
     }
 }
