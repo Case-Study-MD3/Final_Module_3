@@ -20,7 +20,8 @@
     </div>
   </div>
 
-  <form action="/confirm" method="post">
+  <form action="confirm" method="post">
+    <input type="hidden" name="step" value="step2">
     <input type="hidden" name="title" value="${movie.movie_name}">
     <input type="hidden" name="quantity" value="${quantity}">
 
