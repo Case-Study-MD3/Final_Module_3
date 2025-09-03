@@ -12,16 +12,16 @@
 
   <div class="card mb-4">
     <div class="card-body">
-      <h4>${movie.title}</h4>
-      <p><strong>Type:</strong> ${movie.type}</p>
-      <p><strong>Duration:</strong> ${movie.duration}</p>
-      <p><strong>Release Date:</strong> ${movie.releaseDate}</p>
+      <h4>${movie.movie_name}</h4>
+      <p><strong>Type:</strong> ${movie.movie_genre}</p>
+      <p><strong>Duration:</strong> ${movie.movie_duration}</p>
+      <p><strong>Release Date:</strong> ${movie.movie_date}</p>
       <p><strong>Tickets:</strong> ${quantity}</p>
     </div>
   </div>
 
   <form action="/confirm" method="post">
-    <input type="hidden" name="title" value="${movie.title}">
+    <input type="hidden" name="title" value="${movie.movie_name}">
     <input type="hidden" name="quantity" value="${quantity}">
 
     <div class="mb-3">

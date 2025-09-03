@@ -45,7 +45,7 @@
   <h1 class="text-center mb-5 movie-title">MOVIE LIST</h1>
   <div class="row g-4 justify-content-center">
     <c:forEach var="movie" items="${movies}">
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-4 d-flex">
         <div class="card shadow-sm w-100 h-100">
           <img src="${movie.image}" class="card-img-top" alt="${movie.movie_name}">
           <div class="card-body d-flex flex-column">
