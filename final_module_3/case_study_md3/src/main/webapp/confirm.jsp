@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container py-4">
-  <h2 class="mb-3">Booking Confirmation</h2>
+  <h2 class="mb-3">Booking Information</h2>
 
   <div class="card mb-4">
     <div class="card-body">

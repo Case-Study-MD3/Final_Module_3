@@ -2,16 +2,17 @@ package controller;
 
 import entity.Movie;
 import service.IMovieService;
-import service.MovieServiceImpl;
+import service.impl.MovieService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-@WebServlet("/con firm")
+@WebServlet("/confirm")
 public class ConfirmServlet extends HttpServlet {
 
-    private final IMovieService movieService = new MovieServiceImpl();
+    private final IMovieService movieService = new MovieService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

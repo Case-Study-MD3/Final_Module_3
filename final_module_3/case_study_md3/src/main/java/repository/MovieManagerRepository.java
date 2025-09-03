@@ -17,13 +17,14 @@ public class MovieManagerRepository {
              ResultSet resultSet = statement.executeQuery("SELECT * FROM movies")) {
 
             while (resultSet.next()) {
+                int id = resultSet.getInt("movie_id");
                 String name = resultSet.getString("movie_name");
                 String genre = resultSet.getString("movie_genre");
                 int duration = resultSet.getInt("movie_duration");
-                LocalDate movieDate = resultSet.getDate("movie_date").toLocalDate();
+                String  movieDate = resultSet.getString("movie_date");
                 String images = resultSet.getString("images");
 
-                Movie movie = new Movie(name, genre, duration, movieDate, images);
+                Movie movie = new Movie(images, id,name, genre, duration, movieDate);
                 movies.add(movie);
             }
         } catch (SQLException e) {

@@ -3,57 +3,44 @@ package entity;
 import java.time.LocalDate;
 
 public class Movie {
-    private String name;
-    private String genre;
-    private int duration;
-    private LocalDate movieDate;
-    private String images;
 
-    public Movie(String name, String genre, int duration, LocalDate movieDate, String images) {
-        this.name = name;
-        this.genre = genre;
-        this.duration = duration;
-        this.movieDate = movieDate;
-        this.images = images;
+    private final String image;
+    private final int movie_id;
+    private final String movie_name;
+    private final String movie_genre;
+    private final int movie_duration;
+    private final String movie_date;
+
+    public Movie(String image, int movie_id, String movie_name, String movie_genre, int movie_duration, String movie_date) {
+        this.image = image;
+        this.movie_id = movie_id;
+        this.movie_name = movie_name;
+        this.movie_genre = movie_genre;
+        this.movie_duration = movie_duration;
+        this.movie_date = movie_date;
     }
 
-    public String getName() {
-        return name;
+    public int getMovie_id() {
+        return movie_id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getMovie_name() {
+        return movie_name;
     }
 
-    public String getGenre() {
-        return genre;
+    public String getMovie_genre() {
+        return movie_genre;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public int getMovie_duration() {
+        return movie_duration;
     }
 
-    public int getDuration() {
-        return duration;
+    public String getMovie_date() {
+        return movie_date;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public LocalDate getMovieDate() {
-        return movieDate;
-    }
-
-    public void setMovieDate(LocalDate movieDate) {
-        this.movieDate = movieDate;
-    }
-
-    public String getImages() {
-        return images;
-    }
-
-    public void setImages(String images) {
-        this.images = images;
+    public String getImage() {
+        return image;
     }
 }
