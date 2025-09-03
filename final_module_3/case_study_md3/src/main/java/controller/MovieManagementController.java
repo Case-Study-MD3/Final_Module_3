@@ -3,7 +3,6 @@ package controller;
 import entity.Movie;
 import service.IMovieManagerService;
 import service.MovieManagerServiceImpl;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,16 +25,23 @@ public class MovieManagementController extends HttpServlet {
         if (action == null) {
             action = "";
         }
+        if ("delete".equals(action)) {
+            int movieId = Integer.parseInt(req.getParameter("movie_id"));
+            service.delete(movieId);
+            resp.sendRedirect(req.getContextPath() + "/api/movie"); // quay lại danh sách
+            return;
+        }
         switch (action) {
             case "movie": {
 //               forward
-                req.getRequestDispatcher("/WEB-INF/movie/create.jsp").forward(req, resp);
+                req.getRequestDispatcher("/create.jsp").forward(req, resp);
                 break;
             }
             default:
                 String message = req.getParameter("message");
                 if ("created".equals(message)) {
                     req.setAttribute("message", "Thêm mới thành công");
+
                 } else if ("updated".equals(message)) {
                     req.setAttribute("message", "Cập nhật thành công");
                 }
@@ -44,24 +50,25 @@ public class MovieManagementController extends HttpServlet {
                 req.getRequestDispatcher("/manager.jsp").forward(req, resp);
         }
     }
-}
-
-/*    @Override
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action");
-        if (action == null) {
-            action = "";
+        if ("create".equals(action)) {
+            String name = req.getParameter("name");
+            String genre = req.getParameter("genre");
+            int duration = Integer.parseInt(req.getParameter("duration"));
+            String date = req.getParameter("date");
+            String image = req.getParameter("image");
+
+            Movie movie = new Movie(image, 0, name, genre, duration, date);
+
+            service.save(movie);
+
+
+            // Redirect về trang quản lý với message
+            resp.sendRedirect(req.getContextPath() + "/api/movie?message=created");
         }
-        switch (action) {
-            case "create":
-                String name = req.getParameter("name");
-                String dob = req.getParameter("dob");
-                Double point = Double.parseDouble(req.getParameter("point"));
-                LocalDate localDate = LocalDate.parse(dob, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                Student student = new Student(name,localDate, point);
-                studentService.save(student);
-                resp.sendRedirect("/students?message=created");
-        }
+
     }
-}*/
+}

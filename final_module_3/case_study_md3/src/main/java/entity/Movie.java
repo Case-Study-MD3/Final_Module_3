@@ -1,7 +1,5 @@
 package entity;
 
-import java.time.LocalDate;
-
 public class Movie {
 
     private final String image;
@@ -43,4 +41,5 @@ public class Movie {
     public String getImage() {
         return image;
     }
+
 }
