@@ -2,7 +2,8 @@ package controller;
 
 import entity.Movie;
 import service.IMovieService;
-import service.MovieServiceImpl;
+import service.impl.MovieService;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +14,7 @@ import java.io.IOException;
 public class BookingServlet extends HttpServlet {
 
     
-    private final IMovieService movieService = new MovieServiceImpl();
+    private final IMovieService movieService = new MovieService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -23,10 +24,10 @@ public class BookingServlet extends HttpServlet {
             Movie movie = movieService.getMovieByTitle(title);
 
             if(movie != null){
-                req.setAttribute("title", movie.getTitle());
-                req.setAttribute("type", movie.getType());
-                req.setAttribute("duration", movie.getDuration());
-                req.setAttribute("date", movie.getReleaseDate());
+                req.setAttribute("title", movie.getMovie_name());
+                req.setAttribute("type", movie.getMovie_genre());
+                req.setAttribute("duration", movie.getMovie_duration());
+                req.setAttribute("date", movie.getMovie_date());
                 req.setAttribute("image", movie.getImage());
 
                 req.getRequestDispatcher("booking.jsp").forward(req, resp);

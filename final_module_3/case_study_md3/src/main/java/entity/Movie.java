@@ -1,57 +1,43 @@
 package entity;
 
 public class Movie {
-    private String image;
-    private String title;
-    private String type;
-    private int duration;
-    private String releaseDate;
+    private final String image;
+    private final int movie_id;
+    private final String movie_name;
+    private final String movie_genre;
+    private final int movie_duration;
+    private final String movie_date;
 
-    public Movie(String image, String title, String type, int duration, String releaseDate) {
+    public Movie(String image, int movie_id, String movie_name, String movie_genre, int movie_duration, String movie_date) {
         this.image = image;
-        this.title = title;
-        this.type = type;
-        this.duration = duration;
-        this.releaseDate = releaseDate;
+        this.movie_id = movie_id;
+        this.movie_name = movie_name;
+        this.movie_genre = movie_genre;
+        this.movie_duration = movie_duration;
+        this.movie_date = movie_date;
     }
 
     public String getImage() {
         return image;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public int getMovie_id() {
+        return movie_id;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getMovie_name() {
+        return movie_name;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public String getMovie_genre() {
+        return movie_genre;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public int getMovie_duration() {
+        return movie_duration;
     }
 
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public String getReleaseDate() {
-        return releaseDate;
+    public String getMovie_date() {
+        return movie_date;
     }
 }
