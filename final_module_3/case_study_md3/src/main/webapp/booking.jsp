@@ -66,7 +66,7 @@
 
 
       <button type="submit" class="btn btn-primary">Confirm Booking</button>
-      <a href="index.jsp" class="btn btn-secondary mt-2">Back to Home</a>
+      <a href="/movies" class="btn btn-secondary mt-2">Back to Home</a>
     </form>
   </div>
 </div>
