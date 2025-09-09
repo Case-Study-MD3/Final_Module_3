@@ -8,4 +8,5 @@ public interface ITicketService {
     List<Ticket> getTicketsByCustomer(int customerId);
 
     int getNextSeatNumber(int showtimeId);
+
 }

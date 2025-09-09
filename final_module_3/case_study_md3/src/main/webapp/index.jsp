@@ -6,7 +6,7 @@
 
   
   <meta charset="UTF-8">
-  <title>Movie List</title>
+  <title>Danh sách phim</title>
   <link href="bootstrap-5.3.7-dist/bootstrap-5.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {

@@ -1,7 +1,6 @@
 package repository.impl;
 
 import entity.Ticket;
-import repository.BaseRepository;
 import repository.ITicketRepository;
 
 import java.sql.*;
@@ -9,12 +8,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static repository.BaseRepository.getConnection;
+
 public class TicketRepository implements ITicketRepository {
 
     @Override
     public void saveTicket(Ticket ticket) {
         String sql = "INSERT INTO tickets(customer_id, showtime_id, ticket_seat, ticket_booking_date) VALUES (?, ?, ?, ?)";
-        try (Connection conn = BaseRepository.getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, ticket.getCustomer_id());
             stmt.setInt(2, ticket.getShowtime_id());
@@ -34,7 +35,7 @@ public class TicketRepository implements ITicketRepository {
     @Override
     public int getNextSeatNumber(int showtimeId) {
         String sql = "SELECT COUNT(*) AS total FROM tickets WHERE showtime_id = ?";
-        try (Connection conn = BaseRepository.getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, showtimeId);
             ResultSet rs = stmt.executeQuery();
@@ -51,7 +52,7 @@ public class TicketRepository implements ITicketRepository {
     public List<Ticket> getTicketsByCustomer(int customerId) {
         List<Ticket> list = new ArrayList<>();
         String sql = "SELECT * FROM tickets WHERE customer_id = ?";
-        try (Connection conn = BaseRepository.getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, customerId);
             ResultSet rs = stmt.executeQuery();
@@ -70,4 +71,51 @@ public class TicketRepository implements ITicketRepository {
         }
         return list;
     }
+
+    @Override
+    public int getTicketCountByMovieId(int movieId) {
+        int count = 0;
+        String sql = "SELECT COUNT(*) AS totalTickets " +
+                "FROM tickets t " +
+                "JOIN showtimes s ON t.showtime_id = s.showtime_id " +
+                "WHERE s.movie_id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, movieId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("totalTickets");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    @Override
+    public double getRevenueByMovieId(int movieId) {
+        double total = 0;
+        String sql = "SELECT COUNT(t.ticket_id) AS ticketsSold, s.showtime_price " +
+                "FROM tickets t " +
+                "JOIN showtimes s ON t.showtime_id = s.showtime_id " +
+                "WHERE s.movie_id = ? " +
+                "GROUP BY s.showtime_id, s.showtime_price";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, movieId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int sold = rs.getInt("ticketsSold");
+                double price = rs.getDouble("showtime_price"); // lấy đúng tên cột
+                total += sold * price;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
 }

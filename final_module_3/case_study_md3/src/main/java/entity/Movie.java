@@ -1,6 +1,7 @@
 package entity;
 
 public class Movie {
+
     private final String image;
     private final int movie_id;
     private final String movie_name;
@@ -15,10 +16,6 @@ public class Movie {
         this.movie_genre = movie_genre;
         this.movie_duration = movie_duration;
         this.movie_date = movie_date;
-    }
-
-    public String getImage() {
-        return image;
     }
 
     public int getMovie_id() {
@@ -40,4 +37,9 @@ public class Movie {
     public String getMovie_date() {
         return movie_date;
     }
+
+    public String getImage() {
+        return image;
+    }
+
 }

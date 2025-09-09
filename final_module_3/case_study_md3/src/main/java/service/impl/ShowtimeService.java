@@ -16,4 +16,17 @@ public class ShowtimeService implements IShowtimeService {
     public void updateSeats(int showtimeId, int newSeats) {
     repo.updateSeats(showtimeId, newSeats);
     }
+
+    @Override
+    public void save(Showtime showtime) {
+        repo.saveShowtime(showtime);
+    }
+    public int getRemainingSeats(int showtimeId) {
+        Showtime showtime = repo.getShowtimeByMovieId(showtimeId);
+        if(showtime != null){
+            int sold = repo.getTicketsSold(showtimeId);
+            return showtime.getTotalSeats() - sold;
+        }
+        return 0;
+    }
 }

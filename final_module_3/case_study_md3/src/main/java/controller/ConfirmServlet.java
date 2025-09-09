@@ -103,7 +103,7 @@ public class ConfirmServlet extends HttpServlet {
             int customerId = 1;
             List<Ticket> bookedTickets = new ArrayList<>();
 
-            
+
             int nextSeat = ticketService.getNextSeatNumber(showtime.getShowtimeId());
 
 

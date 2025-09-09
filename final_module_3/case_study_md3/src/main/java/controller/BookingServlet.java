@@ -30,7 +30,7 @@ public class BookingServlet extends HttpServlet {
                 req.setAttribute("type", movie.getMovie_genre());
                 req.setAttribute("duration", movie.getMovie_duration());
                 req.setAttribute("date", movie.getMovie_date());
-                req.setAttribute("image", movie.getImage());
+                req.setAttribute("images", movie.getImage());
 
                 Showtime showtime = service.getShowtimeByMovieId(movie.getMovie_id());
                 if (showtime != null) {

@@ -4,5 +4,10 @@ import entity.Showtime;
 
 public interface IShowtimeService {
     Showtime getShowtimeByMovieId(int movieId);
+
     void updateSeats(int showtimeId, int newSeats);
+
+    void save(Showtime showtime);
+
+    int getRemainingSeats(int showtimeId);
 }

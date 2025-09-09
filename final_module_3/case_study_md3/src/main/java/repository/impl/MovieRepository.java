@@ -3,7 +3,6 @@ package repository.impl;
 import entity.Movie;
 import repository.BaseRepository;
 import repository.IMovieRepository;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

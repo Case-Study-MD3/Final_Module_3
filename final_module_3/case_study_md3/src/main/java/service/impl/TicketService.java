@@ -34,7 +34,13 @@ public class TicketService implements ITicketService {
         return ticketRepository.getTicketsByCustomer(customerId);
     }
 
+    public int getTicketCount(int movieId) {
+        return ticketRepository.getTicketCountByMovieId(movieId);
+    }
 
+    public double getRevenue(int movieId) {
+        return ticketRepository.getRevenueByMovieId(movieId);
+    }
     public int getNextSeatNumber(int showtimeId) {
         return ticketRepository.getNextSeatNumber(showtimeId);
     }
