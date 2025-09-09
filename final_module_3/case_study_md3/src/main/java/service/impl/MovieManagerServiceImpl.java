@@ -1,10 +1,9 @@
-package service;
+package service.impl;
 
 import entity.Movie;
-import repository.MovieManagerRepository;
+import repository.impl.MovieManagerRepository;
+import service.IMovieManagerService;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MovieManagerServiceImpl implements IMovieManagerService {
@@ -16,12 +15,23 @@ public class MovieManagerServiceImpl implements IMovieManagerService {
     }
 
     @Override
-    public void save(Movie movie) {
-        repository.save(movie);
+    public int save(Movie movie) {
+        return repository.save(movie);
     }
     @Override
     public void delete(int movieId) {
         repository.delete(movieId);
+    }
+
+    @Override
+    public void update(Movie movie) {
+        repository.update(movie);
+
+    }
+
+    @Override
+    public Movie findById(int id) {
+        return repository.findById(id);
     }
 
 }

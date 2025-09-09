@@ -1,10 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>${title} - Booking</title>
-  <link href="bootstrap-5.3.7-dist/bootstrap-5.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/bootstrap-5.3.7-dist/bootstrap-5.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
       background-color: #f8f9fa;
@@ -31,6 +32,7 @@
 <body>
 <div class="container py-4">
 
+
   <div class="movie-card text-center mb-4">
     <h1 class="mb-3">${title}</h1>
     <img src="${image}" class="img-fluid rounded shadow mb-3" alt="${title}">
@@ -44,29 +46,42 @@
 
   <div class="ticket-section">
     <h3>Book Your Tickets</h3>
+    <div class="alert alert-info mb-3">
+      <strong>Remaining Seats:</strong> ${remainingSeats}
+    </div>
+
+
+    <c:if test="${not empty error}">
+      <div class="alert alert-danger">
+          ${error}
+      </div>
+    </c:if>
+
     <form action="confirm" method="post">
+      <input type="hidden" name="step" value="step1">
       <input type="hidden" name="title" value="${title}">
 
 
       <div class="mb-3">
         <label for="ticketsSelect" class="form-label">Quantity Tickets</label>
         <select class="form-select" id="ticketsSelect" name="tickets" onchange="showCustomInput(this)">
-          <option value="1">1 Ticket</option>
-          <option value="2">2 Tickets</option>
-          <option value="3">3 Tickets</option>
-          <option value="optional">Optional</option>
+          <option value="1" <c:if test="${tickets == '1'}">selected</c:if>>1 Ticket</option>
+          <option value="2" <c:if test="${tickets == '2'}">selected</c:if>>2 Tickets</option>
+          <option value="3" <c:if test="${tickets == '3'}">selected</c:if>>3 Tickets</option>
+          <option value="optional" <c:if test="${tickets == 'optional'}">selected</c:if>>Optional</option>
         </select>
       </div>
 
 
       <div class="mb-3" id="customTicketsContainer" style="display: none;">
         <label for="customTickets" class="form-label">Enter Custom Quantity</label>
-        <input type="number" id="customTickets" name="customTickets" min="1" max="100" class="form-control" placeholder="Enter quantity">
+        <input type="number" id="customTickets" name="customTickets" min="1" max="100"
+               class="form-control" placeholder="Enter quantity"
+               value="${customTickets}">
       </div>
 
-
       <button type="submit" class="btn btn-primary">Confirm Booking</button>
-      <a href="index.jsp" class="btn btn-secondary mt-2">Back to Home</a>
+      <a href="/movies" class="btn btn-secondary mt-2">Back to Home</a>
     </form>
   </div>
 </div>
@@ -78,6 +93,13 @@
       container.style.display = 'block';
     } else {
       container.style.display = 'none';
+    }
+  }
+
+  window.onload = function () {
+    const selectedValue = document.getElementById('ticketsSelect').value;
+    if (selectedValue === 'optional') {
+      document.getElementById('customTicketsContainer').style.display = 'block';
     }
   }
 </script>

@@ -1,8 +1,10 @@
 package controller;
 
 import entity.Movie;
+import entity.Showtime;
 import service.IMovieService;
 import service.impl.MovieService;
+import service.impl.ShowtimeService;
 
 
 import javax.servlet.ServletException;
@@ -13,7 +15,7 @@ import java.io.IOException;
 @WebServlet("/booking")
 public class BookingServlet extends HttpServlet {
 
-    
+    private final static ShowtimeService service = new ShowtimeService();
     private final IMovieService movieService = new MovieService();
 
     @Override
@@ -29,6 +31,13 @@ public class BookingServlet extends HttpServlet {
                 req.setAttribute("duration", movie.getMovie_duration());
                 req.setAttribute("date", movie.getMovie_date());
                 req.setAttribute("images", movie.getImage());
+
+                Showtime showtime = service.getShowtimeByMovieId(movie.getMovie_id());
+                if (showtime != null) {
+                    req.setAttribute("remainingSeats", showtime.getTotalSeats());
+                } else {
+                    req.setAttribute("remainingSeats", 0);
+                }
 
                 req.getRequestDispatcher("booking.jsp").forward(req, resp);
             } else {
