@@ -25,6 +25,7 @@ DROP TABLE IF EXISTS `customers`;
 CREATE TABLE `customers` (
   `customer_id` int NOT NULL AUTO_INCREMENT,
   `customer_name` varchar(100) NOT NULL,
+  `email` varchar(50) NOT NULL,
   PRIMARY KEY (`customer_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -35,7 +36,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (1,'Nguyen Van A'),(2,'Tran Thi B'),(3,'Le Van C'),(4,'Pham Thi D'),(5,'Hoang Van E'),(6,'Do Thi F'),(7,'Nguyen Van G'),(8,'Tran Van H'),(9,'Le Thi I');
+INSERT INTO `customers` VALUES (1,'Nguyen Van A',''),(2,'Tran Thi B',''),(3,'Le Van C',''),(4,'Pham Thi D',''),(5,'Hoang Van E',''),(6,'Do Thi F',''),(7,'Nguyen Van G',''),(8,'Tran Van H',''),(9,'Le Thi I','');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -65,6 +66,37 @@ LOCK TABLES `movies` WRITE;
 /*!40000 ALTER TABLE `movies` DISABLE KEYS */;
 INSERT INTO `movies` VALUES (1,'Avengers: Endgame','Action',180,'2025-08-01','images/avengersEndgamejpg.jpg'),(2,'The Conjuring 3','Horror',112,'2025-08-05','images/conjuring.jpg'),(3,'Fast & Furious 10','Action',145,'2025-08-10','images/gr9KBOV.jpg'),(4,'Minions: The Rise of Gru','Animation',90,'2025-08-15','images/minions-.jpg'),(5,'Oppenheimer','Drama',180,'2025-08-20','images/oppenheimer.jpg'),(6,'Spider-Man: No Way Home','Action',150,'2025-08-22','images/spiderman.jpeg'),(7,'Frozen II','Animation',103,'2025-08-25','images/frozenII.jpg'),(8,'Inception','Sci-Fi',148,'2025-08-28','images/inception.jpg'),(9,'Joker','Drama',122,'2025-08-30','images/joker.jpg');
 /*!40000 ALTER TABLE `movies` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `orders` (
+  `orders_id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int DEFAULT NULL,
+  `movie_id` int DEFAULT NULL,
+  `order_price` double NOT NULL,
+  `order_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `ticket_quantity` int NOT NULL,
+  PRIMARY KEY (`orders_id`),
+  KEY `customer_id` (`customer_id`),
+  KEY `movie_id` (`movie_id`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
+  CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`movie_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orders`
+--
+
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -120,7 +152,7 @@ CREATE TABLE `showtimes` (
 
 LOCK TABLES `showtimes` WRITE;
 /*!40000 ALTER TABLE `showtimes` DISABLE KEYS */;
-INSERT INTO `showtimes` VALUES (1,1,1,'2025-08-27 14:00:00',120000,70),(2,2,2,'2025-08-27 18:30:00',100000,59),(3,3,1,'2025-08-28 20:00:00',130000,70),(4,4,2,'2025-08-28 16:00:00',90000,50),(5,5,1,'2025-08-29 19:00:00',150000,90),(6,6,2,'2025-08-30 21:00:00',140000,80),(7,7,1,'2025-08-31 10:00:00',95000,50),(8,8,2,'2025-09-01 17:00:00',125000,70),(9,9,1,'2025-09-02 20:30:00',110000,60);
+INSERT INTO `showtimes` VALUES (1,1,1,'2025-08-27 14:00:00',120000,70),(2,2,2,'2025-08-27 18:30:00',100000,56),(3,3,1,'2025-08-28 20:00:00',130000,70),(4,4,2,'2025-08-28 16:00:00',90000,50),(5,5,1,'2025-08-29 19:00:00',150000,90),(6,6,2,'2025-08-30 21:00:00',140000,80),(7,7,1,'2025-08-31 10:00:00',95000,50),(8,8,2,'2025-09-01 17:00:00',125000,70),(9,9,1,'2025-09-02 20:30:00',110000,60);
 /*!40000 ALTER TABLE `showtimes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,7 +175,7 @@ CREATE TABLE `tickets` (
   KEY `showtime_id` (`showtime_id`),
   CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
   CONSTRAINT `tickets_ibfk_2` FOREIGN KEY (`showtime_id`) REFERENCES `showtimes` (`showtime_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,7 +184,7 @@ CREATE TABLE `tickets` (
 
 LOCK TABLES `tickets` WRITE;
 /*!40000 ALTER TABLE `tickets` DISABLE KEYS */;
-INSERT INTO `tickets` VALUES (1,1,1,'A1','2025-08-26 10:00:00'),(2,2,2,'B2','2025-08-26 11:30:00'),(3,3,3,'C3','2025-08-27 09:00:00'),(4,4,4,'D4','2025-08-27 14:15:00'),(5,5,5,'E5','2025-08-28 13:45:00'),(6,6,6,'F6','2025-08-28 18:20:00'),(7,7,7,'G7','2025-08-29 16:30:00'),(8,8,8,'H8','2025-08-30 12:10:00'),(9,9,9,'I9','2025-08-31 09:55:00'),(10,1,2,'A2','2025-08-27 18:30:00'),(11,1,2,'A3','2025-08-27 18:30:00'),(12,1,2,'A4','2025-08-27 18:30:00'),(13,1,2,'A5','2025-08-27 18:30:00'),(14,1,2,'A6','2025-08-27 18:30:00'),(15,1,2,'A7','2025-08-27 18:30:00'),(16,1,2,'A8','2025-08-27 18:30:00'),(17,1,2,'A9','2025-08-27 18:30:00');
+INSERT INTO `tickets` VALUES (1,1,1,'A1','2025-08-26 10:00:00'),(2,2,2,'B2','2025-08-26 11:30:00'),(3,3,3,'C3','2025-08-27 09:00:00'),(4,4,4,'D4','2025-08-27 14:15:00'),(5,5,5,'E5','2025-08-28 13:45:00'),(6,6,6,'F6','2025-08-28 18:20:00'),(7,7,7,'G7','2025-08-29 16:30:00'),(8,8,8,'H8','2025-08-30 12:10:00'),(9,9,9,'I9','2025-08-31 09:55:00'),(10,1,2,'A2','2025-08-27 18:30:00'),(11,1,2,'A3','2025-08-27 18:30:00'),(12,1,2,'A4','2025-08-27 18:30:00'),(13,1,2,'A5','2025-08-27 18:30:00'),(14,1,2,'A6','2025-08-27 18:30:00'),(15,1,2,'A7','2025-08-27 18:30:00'),(16,1,2,'A8','2025-08-27 18:30:00'),(17,1,2,'A9','2025-08-27 18:30:00'),(33,1,2,'A10','2025-08-27 18:30:00'),(34,1,2,'A11','2025-08-27 18:30:00'),(35,1,2,'A12','2025-08-27 18:30:00');
 /*!40000 ALTER TABLE `tickets` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -165,4 +197,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-09-09  8:25:18
+-- Dump completed on 2025-09-09 15:12:23

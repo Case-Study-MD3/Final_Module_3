@@ -112,7 +112,7 @@ public class ConfirmServlet extends HttpServlet {
                 bookedTickets.add(ticket);
             }
 
-            req.setAttribute("message", "Booking successful!");
+            req.setAttribute("message", "Đặt Vé Thành Công!");
             req.setAttribute("customerName", customerName);
             req.setAttribute("movie", movie);
             req.setAttribute("showtime", showtime);
@@ -121,7 +121,7 @@ public class ConfirmServlet extends HttpServlet {
 
             req.getRequestDispatcher("success.jsp").forward(req, resp);
         } else {
-            req.setAttribute("error", "Sorry! Not enough seats available.");
+            req.setAttribute("error", "Không đủ số lượng vé");
             req.setAttribute("movie", movie);
             req.setAttribute("quantity", quantity);
             req.getRequestDispatcher("confirm.jsp").forward(req, resp);

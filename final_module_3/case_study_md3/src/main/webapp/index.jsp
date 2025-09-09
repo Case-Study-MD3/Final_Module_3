@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>Đặt Vé Phim</title>
     <link href="bootstrap-5.3.7-dist/bootstrap-5.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             background-color: #f8f9fa;
@@ -21,10 +22,8 @@
         }
 
         .movie-title {
-            font-family: 'Creepster', cursive;
-            font-size: 3rem;
-            color: #ff4d4d;
-            text-shadow: 2px 2px #000;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
         }
 
         .card-img-top {
@@ -122,7 +121,7 @@
     </button>
 </div>
 
-<!-- Movie List -->
+
 <div class="container py-5">
     <h1 class="text-center mb-5 movie-title">DANH SÁCH PHIM</h1>
     <div class="row g-4 justify-content-center">

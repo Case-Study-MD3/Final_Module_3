@@ -44,20 +44,18 @@
     <h1 class="mb-3">${title}</h1>
     <img src="${images}" class="img-fluid rounded shadow mb-3 img-fixed" alt="${title}">
     <ul class="list-group w-50 mx-auto">
-      <li class="list-group-item"><strong>Type:</strong> ${type}</li>
-      <li class="list-group-item"><strong>Duration:</strong> ${duration}</li>
-      <li class="list-group-item"><strong>Release Date:</strong> ${date}</li>
+      <li class="list-group-item"><strong>Thể loại:</strong> ${type}</li>
+      <li class="list-group-item"><strong>Thời lượng:</strong> ${duration} phút</li>
+      <li class="list-group-item"><strong>Ngày khởi chiếu:</strong> ${date}</li>
     </ul>
   </div>
 
-
   <div class="ticket-section">
-    <h3>Book Your Tickets</h3>
+    <h3>Đặt vé của bạn</h3>
     <div class="alert alert-info mb-3">
-      <strong>Remaining Seats:</strong> ${remainingSeats}<br><br>
-      <strong>Price:</strong> <span id="totalPrice" data-price="${Price}">${Price}</span> VND
+      <strong>Số ghế còn lại:</strong> ${remainingSeats}<br><br>
+      <strong>Giá vé:</strong> <span id="totalPrice" data-price="${Price}">${Price}</span> VND
     </div>
-
 
     <c:if test="${not empty error}">
       <div class="alert alert-danger">
@@ -69,29 +67,28 @@
       <input type="hidden" name="step" value="step1">
       <input type="hidden" name="title" value="${title}">
 
-
       <div class="mb-3">
-        <label for="ticketsSelect" class="form-label">Quantity Tickets</label>
+        <label for="ticketsSelect" class="form-label">Số lượng vé</label>
         <select class="form-select" id="ticketsSelect" name="tickets" onchange="showCustomInput(this)">
-          <option value="1" <c:if test="${tickets == '1'}">selected</c:if>>1 Ticket</option>
-          <option value="2" <c:if test="${tickets == '2'}">selected</c:if>>2 Tickets</option>
-          <option value="3" <c:if test="${tickets == '3'}">selected</c:if>>3 Tickets</option>
-          <option value="optional" <c:if test="${tickets == 'optional'}">selected</c:if>>Optional</option>
+          <option value="1" <c:if test="${tickets == '1'}">selected</c:if>>1 vé</option>
+          <option value="2" <c:if test="${tickets == '2'}">selected</c:if>>2 vé</option>
+          <option value="3" <c:if test="${tickets == '3'}">selected</c:if>>3 vé</option>
+          <option value="optional" <c:if test="${tickets == 'optional'}">selected</c:if>>Tùy chọn</option>
         </select>
       </div>
 
-
       <div class="mb-3" id="customTicketsContainer" style="display: none;">
-        <label for="customTickets" class="form-label">Enter Custom Quantity</label>
+        <label for="customTickets" class="form-label">Nhập số lượng vé</label>
         <input type="number" id="customTickets" name="customTickets" min="1" max="100"
-               class="form-control" placeholder="Enter quantity"
+               class="form-control" placeholder="Nhập số lượng"
                value="${customTickets}">
       </div>
 
-      <button type="submit" class="btn btn-primary">Confirm Booking</button>
-      <a href="/movies" class="btn btn-secondary mt-2">Back to Home</a>
+      <button type="submit" class="btn btn-primary">Xác nhận đặt vé</button>
+      <a href="/movies" class="btn btn-secondary mt-2">Quay lại danh sách phim</a>
     </form>
   </div>
+
 </div>
 
 <script>
