@@ -27,6 +27,13 @@
     .btn-primary {
       width: 100%;
     }
+    .img-fixed {
+      width: 50%;
+      height: 500px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
   </style>
 </head>
 <body>
@@ -35,7 +42,7 @@
 
   <div class="movie-card text-center mb-4">
     <h1 class="mb-3">${title}</h1>
-    <img src="${image}" class="img-fluid rounded shadow mb-3" alt="${title}">
+    <img src="${images}" class="img-fluid rounded shadow mb-3 img-fixed" alt="${title}">
     <ul class="list-group w-50 mx-auto">
       <li class="list-group-item"><strong>Type:</strong> ${type}</li>
       <li class="list-group-item"><strong>Duration:</strong> ${duration}</li>
@@ -47,7 +54,8 @@
   <div class="ticket-section">
     <h3>Book Your Tickets</h3>
     <div class="alert alert-info mb-3">
-      <strong>Remaining Seats:</strong> ${remainingSeats}
+      <strong>Remaining Seats:</strong> ${remainingSeats}<br><br>
+      <strong>Price:</strong> <span id="totalPrice" data-price="${Price}">${Price}</span> VND
     </div>
 
 
@@ -102,6 +110,40 @@
       document.getElementById('customTicketsContainer').style.display = 'block';
     }
   }
+
+    function updateTotalPrice() {
+    const basePrice = parseInt(document.getElementById('totalPrice').getAttribute('data-price'));
+    const select = document.getElementById('ticketsSelect');
+    const customInput = document.getElementById('customTickets');
+    let quantity = 1;
+
+    if (select.value === 'optional') {
+    quantity = customInput.value ? parseInt(customInput.value) : 1;
+  } else {
+    quantity = parseInt(select.value);
+  }
+
+    if (isNaN(quantity) || quantity <= 0) quantity = 1;
+
+    const total = basePrice * quantity;
+    document.getElementById('totalPrice').textContent = total.toLocaleString();
+  }
+
+    document.getElementById('ticketsSelect').addEventListener('change', function() {
+    updateTotalPrice();
+    showCustomInput(this);
+  });
+
+    document.getElementById('customTickets').addEventListener('input', updateTotalPrice);
+
+    window.onload = function () {
+    if (document.getElementById('ticketsSelect').value === 'optional') {
+    document.getElementById('customTicketsContainer').style.display = 'block';
+  }
+    updateTotalPrice();
+  }
+
+
 </script>
 </body>
 </html>
