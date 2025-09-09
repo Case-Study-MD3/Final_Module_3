@@ -1,6 +1,7 @@
 package repository.impl;
 
 import entity.Movie;
+import repository.BaseRepository;
 import repository.IMovieManagementRepository;
 
 import java.sql.*;
@@ -129,4 +130,56 @@ public class MovieManagerRepository implements IMovieManagementRepository {
         }
         return null;
     }
+    public List<Movie> searchMovies(String keyword, String fromDate, String toDate) {
+        List<Movie> movies = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT * FROM movies WHERE 1=1");
+        List<Object> params = new ArrayList<>();
+
+        // Tìm theo tên phim (không phân biệt hoa thường)
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append(" AND LOWER(movie_name) LIKE LOWER(?)");
+            params.add("%" + keyword.trim() + "%");
+        }
+
+        // Validation ngày tháng
+        if (fromDate != null && !fromDate.trim().isEmpty()) {
+            sql.append(" AND movie_date >= ?");
+            params.add(fromDate);
+        }
+
+        if (toDate != null && !toDate.trim().isEmpty()) {
+            sql.append(" AND movie_date <= ?");
+            params.add(toDate);
+        }
+
+        sql.append(" ORDER BY movie_date DESC");
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = Objects.requireNonNull(conn).prepareStatement(sql.toString())) {
+
+            for (int i = 0; i < params.size(); i++) {
+                stmt.setObject(i + 1, params.get(i));
+            }
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("movie_id");
+                String name = rs.getString("movie_name");
+                String genre = rs.getString("movie_genre");
+                int duration = rs.getInt("movie_duration");
+                String movieDate = rs.getString("movie_date");
+                String images = rs.getString("images");
+
+                Movie movie = new Movie(images, id, name, genre, duration, movieDate);
+                movies.add(movie);
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi tìm kiếm phim: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return movies;
+    }
+
+
 }

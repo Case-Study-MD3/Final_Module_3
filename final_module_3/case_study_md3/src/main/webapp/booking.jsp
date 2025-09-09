@@ -27,6 +27,12 @@
     .btn-primary {
       width: 100%;
     }
+    .img-fixed {
+      width: 50%;
+      height: 500px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
   </style>
 </head>
 <body>
@@ -35,7 +41,7 @@
 
   <div class="movie-card text-center mb-4">
     <h1 class="mb-3">${title}</h1>
-    <img src="${image}" class="img-fluid rounded shadow mb-3" alt="${title}">
+    <img src="${images}" class="img-fluid rounded shadow mb-3 img-fixed" alt="${title}">
     <ul class="list-group w-50 mx-auto">
       <li class="list-group-item"><strong>Type:</strong> ${type}</li>
       <li class="list-group-item"><strong>Duration:</strong> ${duration}</li>
