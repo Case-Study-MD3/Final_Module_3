@@ -30,7 +30,7 @@ public class MovieManagementController extends HttpServlet {
         if ("delete".equals(action)) {
             int movieId = Integer.parseInt(req.getParameter("movie_id"));
             service.delete(movieId);
-            resp.sendRedirect(req.getContextPath() + "/api/movie"); // quay lại danh sách
+            resp.sendRedirect(req.getContextPath() + "/api/movie");
             return;
         }
 
@@ -47,11 +47,57 @@ public class MovieManagementController extends HttpServlet {
                 req.getRequestDispatcher("/create.jsp").forward(req, resp);
                 break;
             }
+            case "list": {
+                String keyword = req.getParameter("keyword");
+                String fromDate = req.getParameter("fromDate");
+                String toDate = req.getParameter("toDate");
+
+                List<Movie> movies;
+
+                // ✅ Validate server-side
+                if (fromDate != null && !fromDate.trim().isEmpty() &&
+                        toDate != null && !toDate.trim().isEmpty()) {
+                    try {
+                        java.sql.Date from = java.sql.Date.valueOf(fromDate);
+                        java.sql.Date to = java.sql.Date.valueOf(toDate);
+
+                        if (to.before(from)) {
+                            req.setAttribute("error", "Khoảng thời gian không hợp lệ: ngày kết thúc không thể nhỏ hơn ngày bắt đầu.");
+                            // Gửi lại danh sách phim đầy đủ + báo lỗi
+                            movies = service.getAllMovie();
+                            req.setAttribute("movies", movies);
+                            req.getRequestDispatcher("/manager.jsp").forward(req, resp);
+                            return; // dừng luôn
+                        }
+                    } catch (IllegalArgumentException e) {
+                        req.setAttribute("error", "Định dạng ngày không hợp lệ!");
+                    }
+                }
+
+                // Nếu có ít nhất 1 tham số tìm kiếm thì gọi hàm search
+                if ((keyword != null && !keyword.trim().isEmpty()) ||
+                        (fromDate != null && !fromDate.trim().isEmpty()) ||
+                        (toDate != null && !toDate.trim().isEmpty())) {
+                    movies = service.searchMovies(keyword, fromDate, toDate);
+                } else {
+                    movies = service.getAllMovie();
+                }
+
+                req.setAttribute("movies", movies);
+                req.getRequestDispatcher("/manager.jsp").forward(req, resp);
+                break;
+            }
+            case "top5": {
+                List<Movie> topMovies = service.getTop5Movies();
+                req.setAttribute("movies", topMovies);
+                req.getRequestDispatcher("/top5.jsp").forward(req, resp);
+                break;
+            }
+
             default:
                 String message = req.getParameter("message");
                 if ("created".equals(message)) {
                     req.setAttribute("message", "Thêm mới thành công");
-
                 } else if ("updated".equals(message)) {
                     req.setAttribute("message", "Cập nhật thành công");
                 }
@@ -111,5 +157,12 @@ public class MovieManagementController extends HttpServlet {
 
             resp.sendRedirect(req.getContextPath() + "/api/movie?message=updated");
         }
+
+        if ("top5".equals(action)) {
+            List<Movie> topMovies = service.getTop5Movies();
+            req.setAttribute("movies", topMovies);
+            req.getRequestDispatcher("/top5.jsp").forward(req, resp);
+        }
+
     }
 }

@@ -11,7 +11,6 @@
         body {
             background-color: #f8f9fa;
         }
-
         .navbar {
             background-color: #212529;
         }

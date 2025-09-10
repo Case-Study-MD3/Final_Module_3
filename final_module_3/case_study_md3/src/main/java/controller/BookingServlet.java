@@ -6,8 +6,6 @@ import service.IMovieService;
 import service.impl.MovieService;
 import service.impl.ShowtimeService;
 import service.impl.TicketService;
-
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;

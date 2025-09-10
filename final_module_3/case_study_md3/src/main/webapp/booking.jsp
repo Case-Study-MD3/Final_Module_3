@@ -33,7 +33,6 @@
       object-fit: cover;
       border-radius: 8px;
     }
-
   </style>
 </head>
 <body>

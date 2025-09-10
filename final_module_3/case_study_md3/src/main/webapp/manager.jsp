@@ -5,14 +5,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Quản lý phim</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap-5.3.7-dist/bootstrap-5.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/bootstrap-5.3.7-dist/bootstrap-5.3.7-dist/css/bootstrap.min.css">
     <style>
         body {
             background-color: #f8f9fa;
         }
+
         .table th, .table td {
             vertical-align: middle;
         }
+
         .movie-img {
             width: 250px;
             height: 120px;
@@ -20,14 +23,17 @@
             border-radius: 5px;
             border: 1px solid #ddd;
         }
+
         .btn-add {
             display: flex;
             align-items: center;
             gap: 5px;
         }
+
         .alert {
             font-weight: 500;
         }
+
         .img-placeholder {
             width: 250px;
             height: 120px;
@@ -40,6 +46,7 @@
             color: #6c757d;
             font-size: 14px;
         }
+
         .btn-action {
             display: flex;
             gap: 5px;
@@ -48,9 +55,23 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h2 class="mb-4 text-center" style="font-family: 'Roboto', sans-serif; font-weight: 700; text-transform: uppercase;">
-        Quản lý phim
-    </h2>
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-uppercase"
+            style="font-family: 'Segoe UI', sans-serif;
+               font-weight: 800;
+               letter-spacing: 2px;
+               color: #0d6efd;">
+            Quản lý phim
+        </h2>
+        <div class="d-flex justify-content-center mt-2">
+            <div style="width: 80px; height: 4px; background: #0d6efd; border-radius: 10px;"></div>
+        </div>
+        <p class="text-muted mt-2" style="font-size: 15px;">
+            Quản lý danh sách phim, lịch chiếu và thông tin chi tiết.
+        </p>
+    </div>
+
 
     <!-- Message -->
     <c:if test="${not empty message}">
@@ -60,12 +81,65 @@
         </div>
     </c:if>
 
-    <!-- Button thêm phim mới -->
-    <div class="mb-3 text-end">
-        <a href="/api/movie?action=movie" class="btn btn-success">
+    <!-- Button thêm phim mới và Top 5 -->
+    <div class="mb-3 text-end d-flex justify-content-end gap-2">
+        <a href="/api/movie?action=movie" class="btn btn-success btn-add">
             <span class="bi bi-plus-lg"></span> Thêm phim mới
         </a>
+        <a href="/api/movie?action=top5" class="btn btn-primary btn-add">
+            <span class="bi bi-star-fill"></span> Top 5 Phim
+        </a>
     </div>
+
+    <!-- Form tìm kiếm -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <form method="get" action="/api/movie" class="row g-3 align-items-end">
+                <input type="hidden" name="action" value="list"/>
+
+                <!-- Tên phim -->
+                <div class="col-md-4">
+                    <label class="form-label">Tên phim</label>
+                    <input type="text" name="keyword" value="${param.keyword}"
+                           class="form-control" placeholder="Nhập tên phim...">
+                </div>
+
+                <!-- Từ ngày -->
+                <div class="col-md-3">
+                    <label class="form-label">Từ ngày</label>
+                    <input type="date" name="fromDate" value="${param.fromDate}" class="form-control">
+                </div>
+
+                <!-- Đến ngày -->
+                <div class="col-md-3">
+                    <label class="form-label">Đến ngày</label>
+                    <input type="date" name="toDate" value="${param.toDate}" class="form-control">
+                </div>
+
+                <!-- Nút -->
+                <div class="col-md-2 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary flex-fill">Tìm</button>
+                    <a href="/api/movie" class="btn btn-secondary flex-fill">Reset</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Message -->
+    <c:if test="${not empty message}">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </c:if>
+
+    <!-- Error -->
+    <c:if test="${not empty error}">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                ${error}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </c:if>
+
 
     <!-- Table danh sách phim -->
     <div class="table-container">
@@ -119,11 +193,12 @@
                         <a href="/api/movie?action=edit&movie_id=${movie.movie_id}" class="btn btn-warning btn-sm">
                             Sửa
                         </a>
-                        <a href="/api/movie?action=delete&movie_id=${movie.movie_id}"
-                           class="btn btn-danger btn-sm"
-                           onclick="return confirm('Bạn có chắc muốn xoá phim này?');">
+                        <a href="#"
+                           class="btn btn-danger btn-sm deleteBtn"
+                           data-href="/api/movie?action=delete&movie_id=${movie.movie_id}">
                             Xoá
                         </a>
+
                     </td>
                 </tr>
             </c:forEach>
@@ -131,6 +206,42 @@
         </table>
     </div>
 </div>
+
+<!-- Modal Xóa phim -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalLabel">Xác nhận xóa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc muốn xoá phim này?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <a href="#" class="btn btn-danger" id="confirmDeleteBtn">Xóa</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        document.querySelectorAll('.deleteBtn').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault(); // chặn link
+                const href = this.getAttribute('data-href');
+                confirmDeleteBtn.setAttribute('href', href); // gán href cho nút Xóa trong modal
+                deleteModal.show(); // hiện modal
+            });
+        });
+    });
+</script>
+
+
 <script src="${pageContext.request.contextPath}/bootstrap-5.3.7-dist/bootstrap-5.3.7-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

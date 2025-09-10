@@ -1,6 +1,7 @@
 package entity;
 
 public class Customer {
+
     private int customerId;
     private String customerName;
     private String customerEmail;
@@ -54,5 +55,4 @@ public class Customer {
     public void setCustomerPhone(String customerPhone) {
         this.customerPhone = customerPhone;
     }
-
 }

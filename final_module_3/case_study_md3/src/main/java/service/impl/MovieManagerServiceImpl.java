@@ -28,10 +28,19 @@ public class MovieManagerServiceImpl implements IMovieManagerService {
         repository.update(movie);
 
     }
+    @Override
+    public List<Movie> searchMovies(String keyword, String fromDate, String toDate) {
+        return repository.searchMovies(keyword, fromDate, toDate);
+    }
 
     @Override
     public Movie findById(int id) {
         return repository.findById(id);
     }
+    @Override
+    public List<Movie> getTop5Movies() {
+        return repository.getTop5Movies();
+    }
+
 
 }

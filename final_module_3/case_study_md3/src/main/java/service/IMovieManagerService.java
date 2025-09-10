@@ -10,4 +10,8 @@ public interface IMovieManagerService{
     void delete(int movieId);
     void update(Movie movie);
     Movie findById(int id);
+    List<Movie> searchMovies(String keyword, String fromDate, String toDate);
+    List<Movie> getTop5Movies();
+
+
 }
