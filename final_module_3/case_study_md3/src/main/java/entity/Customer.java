@@ -1,22 +1,58 @@
 package entity;
 
 public class Customer {
-    private int customer_id;
-    private String customer_name;
 
-    public int getCustomer_id() {
-        return customer_id;
+    private int customerId;
+    private String customerName;
+    private String customerEmail;
+    private String customerPhone;
+
+    public Customer() {
     }
 
-    public void setCustomer_id(int customer_id) {
-        this.customer_id = customer_id;
+    public Customer(int customerId, String customerName, String customerEmail, String customerPhone) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.customerEmail = customerEmail;
+        this.customerPhone = customerPhone;
     }
 
-    public String getCustomer_name() {
-        return customer_name;
+    public Customer(String customerName, String customerEmail, String customerPhone) {
+        this.customerName = customerName;
+        this.customerEmail = customerEmail;
+        this.customerPhone = customerPhone;
     }
 
-    public void setCustomer_name(String customer_name) {
-        this.customer_name = customer_name;
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
+    }
+
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
     }
 }

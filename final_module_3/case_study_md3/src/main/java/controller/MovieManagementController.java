@@ -87,6 +87,13 @@ public class MovieManagementController extends HttpServlet {
                 req.getRequestDispatcher("/manager.jsp").forward(req, resp);
                 break;
             }
+            case "top5": {
+                List<Movie> topMovies = service.getTop5Movies();
+                req.setAttribute("movies", topMovies);
+                req.getRequestDispatcher("/top5.jsp").forward(req, resp);
+                break;
+            }
+
             default:
                 String message = req.getParameter("message");
                 if ("created".equals(message)) {
@@ -150,5 +157,12 @@ public class MovieManagementController extends HttpServlet {
 
             resp.sendRedirect(req.getContextPath() + "/api/movie?message=updated");
         }
+
+        if ("top5".equals(action)) {
+            List<Movie> topMovies = service.getTop5Movies();
+            req.setAttribute("movies", topMovies);
+            req.getRequestDispatcher("/top5.jsp").forward(req, resp);
+        }
+
     }
 }

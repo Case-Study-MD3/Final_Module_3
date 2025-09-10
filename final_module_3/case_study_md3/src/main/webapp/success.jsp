@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: vvt13
-  Date: 9/3/2025
-  Time: 2:46 PM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 
@@ -77,27 +71,30 @@
 <body>
 <div class="success-card">
     <div class="success-header">
-        <h2>Booking Successful!</h2>
+        <h2>Đặt Vé Thành Công!</h2>
     </div>
 
     <div class="movie-info">
-        <h4>Movie: ${movie.movie_name}</h4>
-        <p><strong>Showtime ID:</strong> ${showtime.showtimeId}</p>
-        <p><strong>Number of Tickets:</strong> ${tickets.size()}</p>
+        <h4>Phim: ${movie.movie_name}</h4>
+        <p><strong>Phòng chiếu: </strong>:</strong> ${showtime.showtimeId}</p>
+        <p><strong>Số lượng vé: </strong>:</strong> ${tickets.size()}</p>
     </div>
 
-    <h5>Tickets:</h5>
+    <h5>Vé</h5>
     <ul class="list-group ticket-list">
         <c:forEach var="ticket" items="${tickets}">
             <li class="list-group-item">
-                <span>Ticket ID: ${ticket.ticket_id}</span>
-                <span>Seat: ${ticket.ticket_seat}</span>
+                <span>Mã Vé: ${ticket.ticket_id}</span>
+                <span>Số ghế: ${ticket.ticket_seat}</span>
             </li>
+            <p>Mã giao dịch: ${param.vnp_TxnRef}</p>
+            <p>Số tiền: ${param.vnp_Amount} VND</p>
+            <p>Ngân hàng: ${param.vnp_BankCode}</p>
         </c:forEach>
     </ul>
 
     <div class="btn-back">
-        <a href="/movies" class="btn btn-primary btn-lg mt-3">Back to Movies</a>
+        <a href="movies" class="btn btn-primary btn-lg mt-3">Quay lại danh sách phim</a>
     </div>
 </div>
 </body>

@@ -81,10 +81,13 @@
         </div>
     </c:if>
 
-    <!-- Button thêm phim mới -->
-    <div class="mb-3 text-end">
-        <a href="/api/movie?action=movie" class="btn btn-success">
+    <!-- Button thêm phim mới và Top 5 -->
+    <div class="mb-3 text-end d-flex justify-content-end gap-2">
+        <a href="/api/movie?action=movie" class="btn btn-success btn-add">
             <span class="bi bi-plus-lg"></span> Thêm phim mới
+        </a>
+        <a href="/api/movie?action=top5" class="btn btn-primary btn-add">
+            <span class="bi bi-star-fill"></span> Top 5 Phim
         </a>
     </div>
 

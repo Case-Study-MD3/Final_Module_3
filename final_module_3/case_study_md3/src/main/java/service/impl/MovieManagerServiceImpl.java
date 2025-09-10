@@ -37,5 +37,10 @@ public class MovieManagerServiceImpl implements IMovieManagerService {
     public Movie findById(int id) {
         return repository.findById(id);
     }
+    @Override
+    public List<Movie> getTop5Movies() {
+        return repository.getTop5Movies();
+    }
+
 
 }

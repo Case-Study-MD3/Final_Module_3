@@ -1,7 +1,6 @@
 package repository.impl;
 
 import entity.Movie;
-import repository.BaseRepository;
 import repository.IMovieManagementRepository;
 
 import java.sql.*;
@@ -179,6 +178,38 @@ public class MovieManagerRepository implements IMovieManagementRepository {
         }
 
         return movies;
+    }
+    public List<Movie> getTop5Movies() {
+        List<Movie> topMovies = new ArrayList<>();
+        String sql = "SELECT m.movie_id, m.movie_name, m.movie_genre, m.movie_duration, m.movie_date, m.images, COUNT(t.ticket_id) AS total_tickets " +
+                "FROM tickets t " +
+                "JOIN showtimes s ON t.showtime_id = s.showtime_id " +
+                "JOIN movies m ON s.movie_id = m.movie_id " +
+                "GROUP BY m.movie_id, m.movie_name, m.movie_genre, m.movie_duration, m.movie_date, m.images " +
+                "ORDER BY total_tickets DESC " +
+                "LIMIT 5";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = Objects.requireNonNull(conn).prepareStatement(sql)) {
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("movie_id");
+                String name = rs.getString("movie_name");
+                String genre = rs.getString("movie_genre");
+                int duration = rs.getInt("movie_duration");
+                String movieDate = rs.getString("movie_date");
+                String images = rs.getString("images");
+
+                Movie movie = new Movie(images, id, name, genre, duration, movieDate);
+                topMovies.add(movie);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return topMovies;
     }
 
 

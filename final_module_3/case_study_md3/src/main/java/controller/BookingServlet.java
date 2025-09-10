@@ -5,8 +5,6 @@ import entity.Showtime;
 import service.IMovieService;
 import service.impl.MovieService;
 import service.impl.ShowtimeService;
-
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -35,6 +33,7 @@ public class BookingServlet extends HttpServlet {
                 Showtime showtime = service.getShowtimeByMovieId(movie.getMovie_id());
                 if (showtime != null) {
                     req.setAttribute("remainingSeats", showtime.getTotalSeats());
+                    req.setAttribute("Price", showtime.getPrice());
                 } else {
                     req.setAttribute("remainingSeats", 0);
                 }
