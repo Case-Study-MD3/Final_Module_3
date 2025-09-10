@@ -86,7 +86,7 @@ public class ConfirmServlet extends HttpServlet {
                 email == null || !email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$") ||
                 phone == null || !phone.matches("\\d{10,11}")) {
 
-            req.setAttribute("error", "Invalid information! Please check your details.");
+            req.setAttribute("error", "Sai thông tin! Bạn hãy kiểm tra lại");
             req.setAttribute("movie", movieService.getMovieByTitle(title));
             req.setAttribute("quantity", quantity);
             req.getRequestDispatcher("confirm.jsp").forward(req, resp);

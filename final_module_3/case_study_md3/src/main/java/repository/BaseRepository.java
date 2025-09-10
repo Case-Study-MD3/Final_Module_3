@@ -8,6 +8,8 @@ public class BaseRepository {
 
     private static String jdbcURL = "jdbc:mysql://localhost:3306/cinema";
     private static String jdbcUsername = "root";
+
+
     private static String jdbcPassword = "codegym";
     private static Connection connection =null;
     private BaseRepository() {

@@ -84,7 +84,7 @@
       </div>
 
       <button type="submit" class="btn btn-primary">Xác nhận đặt vé</button>
-      <a href="/movies" class="btn btn-secondary mt-2">Quay lại danh sách phim</a>
+      <a href="movies" class="btn btn-secondary mt-2">Quay lại danh sách phim</a>
     </form>
   </div>
 

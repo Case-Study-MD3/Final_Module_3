@@ -19,8 +19,16 @@ public class PaymentServlet extends HttpServlet {
         String vnp_Command = "pay";
         String orderType = "other";
         String bankCode = req.getParameter("bankCode");
-        long amount = (long) (150000 * 100);
-        String vnp_TxnRef = "1257";
+
+//        long amount = Long.parseLong(req.getParameter("amount")) * 100;
+        String amountStr = req.getParameter("amount");
+        System.out.println("Amount param: " + amountStr); // debug
+
+        long amount = (long) Double.parseDouble(amountStr) * 100;
+
+        String vnp_TxnRef = req.getParameter("ticket_id");
+//        long amount = 50000 * 100;
+//        String vnp_TxnRef = "1238";
         String vnp_IpAddr = VNPayConfig.getIpAddress(req);
         String vnp_TmnCode = VNPayConfig.vnp_TmnCode;
         Map<String, String> vnp_Params = new HashMap<>();
@@ -63,11 +71,11 @@ public class PaymentServlet extends HttpServlet {
             String fieldName = (String) itr.next();
             String fieldValue = (String) vnp_Params.get(fieldName);
             if ((fieldValue != null) && (fieldValue.length() > 0)) {
-                //Build hash data
+
                 hashData.append(fieldName);
                 hashData.append('=');
                 hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
-                //Build query
+                
                 query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
                 query.append('=');
                 query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
