@@ -96,10 +96,6 @@
                 <li class="nav-item"><a class="nav-link" href="#">Trang Chủ</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Phim</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Liên Hệ</a></li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-dark ms-2 employee-btn"
-                       href="${pageContext.request.contextPath}/api/employee">Nhân Viên</a>
-                </li>
 
             </ul>
         </div>
