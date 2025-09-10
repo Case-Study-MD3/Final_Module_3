@@ -95,6 +95,7 @@
                 <li class="nav-item"><a class="nav-link" href="#">Trang Chủ</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Phim</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Liên Hệ</a></li>
+
             </ul>
         </div>
     </div>

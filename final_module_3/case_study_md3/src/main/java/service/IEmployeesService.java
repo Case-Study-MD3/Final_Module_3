@@ -1,0 +1,19 @@
+package service;
+
+import entity.Employees;
+
+import java.util.List;
+
+public interface IEmployeesService {
+    List<Employees> getAllEmployees();
+    int save(Employees employee);
+    void update(Employees employee);
+    void delete(int employeeId);
+    Employees findById(int employeeId);
+
+    List<Employees> searchEmployees(String keyword);
+
+    boolean existsByEmail(String email);
+
+
+}
