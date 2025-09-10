@@ -80,9 +80,18 @@ public class EmployeesManagementController extends HttpServlet {
             String phoneNumber = req.getParameter("phone");
 
             Employees employee = new Employees(0, name, email, phoneNumber);
-            service.save(employee);
+            try {
+                service.save(employee);
+                resp.sendRedirect(req.getContextPath() + "/api/employee?message=created");
+            }catch (RuntimeException e){
+                // Gửi thông báo lỗi về JSP
+                req.setAttribute("errorMessage", e.getMessage());
+                req.setAttribute("employee", employee); // giữ dữ liệu đã nhập
+                req.getRequestDispatcher("/add-rental.jsp").forward(req, resp);
+            }
 
-            resp.sendRedirect(req.getContextPath() + "/api/employee?message=created");
+
+
         }
 
         if ("update".equals(action)) {
@@ -92,9 +101,18 @@ public class EmployeesManagementController extends HttpServlet {
             String phoneNumber = req.getParameter("phone");
 
             Employees employee = new Employees(id, name, email, phoneNumber);
-            service.update(employee);
 
-            resp.sendRedirect(req.getContextPath() + "/api/employee?message=updated");
+            try {
+                service.update(employee);
+
+                resp.sendRedirect(req.getContextPath() + "/api/employee?message=updated");
+            } catch (RuntimeException e){
+                // Gửi thông báo lỗi về JSP
+                req.setAttribute("errorMessage", e.getMessage());
+                req.setAttribute("employee", employee); // giữ dữ liệu đã nhập
+                req.getRequestDispatcher("/update-rental.jsp").forward(req, resp);
+            }
+
         }
     }
 

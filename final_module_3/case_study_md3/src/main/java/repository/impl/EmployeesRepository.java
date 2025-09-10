@@ -65,6 +65,7 @@ public class EmployeesRepository implements IEmployeesRepository {
             ps.setString(1, employee.getName());
             ps.setString(2, employee.getEmail());
             ps.setString(3, employee.getPhoneNumber());
+            ps.setInt(4,employee.getId());
 
 
             ps.executeUpdate();
@@ -119,15 +120,34 @@ public class EmployeesRepository implements IEmployeesRepository {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Employees(
-                        rs.getInt("id"),
+                        rs.getInt("employee_id"),
                         rs.getString("name"),
                         rs.getString("email"),
-                        rs.getString("phoneNumber")
+                        rs.getString("phone_number")
                 ));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        String sql = "SELECT COUNT(*) FROM employees WHERE email = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = Objects.requireNonNull(conn).prepareStatement(sql)) {
+
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    // Nếu COUNT > 0, email đã tồn tại
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; // nếu lỗi hoặc không tìm thấy, trả về false
     }
 }

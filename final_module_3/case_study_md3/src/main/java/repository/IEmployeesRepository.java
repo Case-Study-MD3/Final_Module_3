@@ -14,4 +14,6 @@ public interface IEmployeesRepository {
     Employees findById(int employeeId);
 
     List<Employees> searchEmployees(String keyword);
+
+    boolean existsByEmail(String email);
 }

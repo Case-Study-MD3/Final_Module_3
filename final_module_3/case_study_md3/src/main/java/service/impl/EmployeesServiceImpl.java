@@ -19,7 +19,10 @@ public class EmployeesServiceImpl implements IEmployeesService {
 
     @Override
     public int save(Employees employee) {
-      return employeesRepository.save(employee);
+          if (existsByEmail(employee.getEmail())){
+              throw new RuntimeException("Email đã tồn tại");
+          }
+        return employeesRepository.save(employee);
     }
 
     @Override
@@ -54,5 +57,10 @@ public class EmployeesServiceImpl implements IEmployeesService {
         }
 
         return result;
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return employeesRepository.existsByEmail(email);
     }
 }

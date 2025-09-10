@@ -13,5 +13,7 @@ public interface IEmployeesService {
 
     List<Employees> searchEmployees(String keyword);
 
+    boolean existsByEmail(String email);
+
 
 }
