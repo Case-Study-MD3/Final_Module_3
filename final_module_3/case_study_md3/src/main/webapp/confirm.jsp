@@ -56,8 +56,9 @@
 
 
   <div class="card p-4">
-    <form action="/payment" method="post">
+    <form action="payment" method="post">
       <input type="hidden" name="step" value="step2">
+      <input type="hidden" name="ticket_id" value="${ticket.ticket_id}">
       <input type="hidden" name="amount" value="${quantity * Price}">
       <input type="hidden" name="title" value="${movie.movie_name}">
       <input type="hidden" name="quantity" value="${quantity}">
